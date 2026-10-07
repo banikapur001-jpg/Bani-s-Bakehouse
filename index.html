@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bani's Bakehouse — Freshly Baked with Love</title>
+  
+  <!-- Google Fonts: Playfair Display & Quicksand -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Brand Colour Palette */
+    :root {
+      --bg-cream: #fffaf8;         /* Page background */
+      --peach-warm: #ffe5d9;       /* Swatch 2: Header gradient & highlights */
+      --pink-soft: #ffcad4;        /* Swatch 3: Soft borders & card accents */
+      --pink-accent: #f4acb7;      /* Swatch 4: Active borders & button hover */
+      --mauve-deep: #9d8189;       /* Swatch 5: Headings & branding */
+      --sage-subtle: #d8e2dc;      /* Swatch 1: Badges & subtle tags */
+      --text-dark: #43363a;        /* High-contrast readable body text */
+      --text-muted: #826f74;       /* Subtitle & label tone */
+      --shadow: 0 10px 25px rgba(157, 129, 137, 0.12);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    select, input, textarea, button {
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    h1, .section-title, .order-box h2, .cart-box h2 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 45px 20px 30px;
+      background: linear-gradient(180deg, var(--peach-warm) 0%, var(--bg-cream) 100%);
+    }
+
+    .bakery-logo {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 3px solid var(--pink-soft);
+      box-shadow: var(--shadow);
+      background-color: #ffffff;
+      margin-bottom: 16px;
+      padding: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--sage-subtle);
+      color: var(--text-dark);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      border: 1px solid #c7d4cd;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: var(--mauve-deep);
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      line-height: 1.6;
+      max-width: 620px;
+      margin: 0 auto;
+      font-weight: 500;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 1.9rem;
+      text-align: center;
+      color: var(--text-dark);
+      margin: 40px 0 22px;
+    }
+
+    /* Category Cards Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 2px solid var(--pink-soft);
+      border-radius: var(--radius);
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pink-accent);
+    }
+
+    .product-card.selected {
+      border-color: var(--pink-accent);
+      background-color: #fff4f6;
+      box-shadow: 0 12px 28px rgba(157, 129, 137, 0.22);
+    }
+
+    .product-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .product-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--mauve-deep);
+    }
+
+    /* Selector Box */
+    .selector-box {
+      background: #ffffff;
+      border: 2px solid var(--pink-soft);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 0 auto 35px;
+      max-width: 650px;
+      box-shadow: var(--shadow);
+    }
+
+    .selector-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--mauve-deep);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+
+    select, input[type="text"], input[type="date"], textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--pink-soft);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background-color: #fffdfd;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--pink-accent);
+      background-color: #ffffff;
+    }
+
+    /* Add to Basket Button */
+    .add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background-color: var(--mauve-deep);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 6px 16px rgba(157, 129, 137, 0.25);
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .add-btn:hover {
+      background-color: #8b6e76;
+      transform: translateY(-2px);
+    }
+
+    /* Basket / Cart Box */
+    .order-box {
+      background: #ffffff;
+      border: 2px dashed var(--pink-soft);
+      border-radius: var(--radius);
+      padding: 35px;
+      box-shadow: var(--shadow);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .order-box h2 {
+      color: var(--mauve-deep);
+      font-size: 1.7rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .cart-items-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background-color: var(--peach-warm);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .cart-item-details {
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .cart-item-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--mauve-deep);
+      margin-right: 12px;
+    }
+
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: #c2185b;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .remove-btn:hover {
+      background-color: #ffd4de;
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 20px 0;
+      font-style: italic;
+    }
+
+    .cart-total-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-top: 2px solid var(--pink-soft);
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .cart-total-amount {
+      color: var(--mauve-deep);
+      font-size: 1.4rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      padding: 16px 20px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #20b858;
+      transform: translateY(-2px);
+    }
+
+    .whatsapp-icon {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .order-note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+        gap: 0;
+      }
+      .order-box, .selector-box {
+        padding: 22px 16px;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .tagline {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="Bani's Bakehouse Logo" class="bakery-logo" />
+    <br />
+    <span class="badge">Artisanal & Homecrafted</span>
+    <h1>Bani's Bakehouse</h1>
+    <p class="tagline">Warm treats, delicate flavours, and handcrafted celebration cakes made fresh for your sweetest memories.</p>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">1. Choose Your Treats</h2>
+    
+    <!-- 5 Category Cards -->
+    <div class="menu-grid" id="menuGrid">
+      <div class="product-card selected" onclick="pickCategory('Cookies')">
+        <span class="product-icon">🍪</span>
+        <div class="product-name">Cookies</div>
+        <div class="product-price">From ₹60</div>
+      </div>
+
+      <div class="product-card" onclick="pickCategory('Tea cakes')">
+        <span class="product-icon">🥮</span>
+        <div class="product-name">Tea cakes</div>
+        <div class="product-price">From ₹350</div>
+      </div>
+
+      <div class="product-card" onclick="pickCategory('Cake jars')">
+        <span class="product-icon">🫙</span>
+        <div class="product-name">Cake jars</div>
+        <div class="product-price">₹350 each</div>
+      </div>
+
+      <div class="product-card" onclick="pickCategory('Frosted cakes')">
+        <span class="product-icon">🎂</span>
+        <div class="product-name">Frosted cakes</div>
+        <div class="product-price">From ₹650</div>
+      </div>
+
+      <div class="product-card" onclick="pickCategory('Beyond cakes')">
+        <span class="product-icon">✨</span>
+        <div class="product-name">Beyond cakes</div>
+        <div class="product-price">From ₹180</div>
+      </div>
+    </div>
+
+    <!-- Active Item Customiser & Add-to-Basket -->
+    <div class="selector-box">
+      <div class="selector-title">
+        Select Options for <span id="activeCategoryName" style="text-decoration: underline;">Cookies</span>
+      </div>
+
+      <div class="form-group">
+        <label for="subcategorySelect">Flavour / Item</label>
+        <select id="subcategorySelect" onchange="onItemChanged()">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sizeSelect">Size / Quantity</label>
+        <select id="sizeSelect" onchange="updateEstimatedPrice()">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+
+      <button type="button" class="add-btn" onclick="addToBasket()">
+        ➕ Add to Order Basket (<span id="btnPriceDisplay">₹60</span>)
+      </button>
+    </div>
+
+    <!-- Basket & Order Section -->
+    <div class="order-box">
+      <h2>2. Your Order Basket 🧺</h2>
+
+      <!-- Items List -->
+      <ul class="cart-items-list" id="cartList">
+        <li class="empty-cart-msg">Your basket is empty. Select an item above and click "Add to Order Basket".</li>
+      </ul>
+
+      <!-- Total -->
+      <div class="cart-total-box">
+        <span>Total Amount:</span>
+        <span class="cart-total-amount" id="cartTotal">₹0</span>
+      </div>
+
+      <!-- Date & Occasion -->
+      <div class="row">
+        <div class="form-group">
+          <label for="date">Required Date *</label>
+          <input type="date" id="date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="occasion">Occasion</label>
+          <input type="text" id="occasion" placeholder="e.g. Birthday, Anniversary, Tea Party" />
+        </div>
+      </div>
+
+      <!-- Message / Notes -->
+      <div class="form-group">
+        <label for="message">Message on Cake / Custom Notes</label>
+        <textarea id="message" rows="2" placeholder="e.g. 'Happy Birthday Kabir!' or eggless preference"></textarea>
+      </div>
+
+      <!-- WhatsApp Order Button -->
+      <button class="whatsapp-btn" onclick="orderOnWhatsApp()">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24">
+          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+        </svg>
+        Order on WhatsApp (<span id="btnTotalDisplay">₹0</span>)
+      </button>
+
+      <p class="order-note">Clicking will open WhatsApp with your itemised basket & total amount pre-filled.</p>
+    </div>
+  </div>
+
+  <script>
+    // Your verified WhatsApp phone number
+    const BAKEHOUSE_PHONE = "919654148896";
+
+    // Menu Structure with Price Calculation Data
+    const MENU_CATALOG = {
+      "Cookies": {
+        items: [
+          { name: "Dark chocolate chip", unitPrice: 60 },
+          { name: "White chocolate and cranberry", unitPrice: 70 },
+          { name: "Cranberry and pistachio", unitPrice: 90 },
+          { name: "Double dark chocolate chip", unitPrice: 70 }
+        ],
+        sizes: [
+          { label: "1 piece", multiplier: 1 },
+          { label: "Box of 4", multiplier: 4 },
+          { label: "Box of 6", multiplier: 6 },
+          { label: "Box of 12", multiplier: 12 }
+        ]
+      },
+      "Tea cakes": {
+        items: [
+          { name: "Vanilla", unitPrice: 350 },
+          { name: "Chocolate", unitPrice: 400 },
+          { name: "Lemon", unitPrice: 500 },
+          { name: "Dates and walnut", unitPrice: 500 },
+          { name: "Banana bread", unitPrice: 400 }
+        ],
+        sizes: [
+          { label: "1 Loaf (Standard)", multiplier: 1 },
+          { label: "2 Loaves", multiplier: 2 },
+          { label: "3 Loaves", multiplier: 3 }
+        ]
+      },
+      "Cake jars": {
+        items: [
+          { name: "Chocolate and berries", unitPrice: 350 },
+          { name: "Chocolate truffle", unitPrice: 350 },
+          { name: "Mixed berries", unitPrice: 350 },
+          { name: "Tiramisu", unitPrice: 350 }
+        ],
+        sizes: [
+          { label: "1 Jar", multiplier: 1 },
+          { label: "Pack of 2", multiplier: 2 },
+          { label: "Pack of 4", multiplier: 4 }
+        ]
+      },
+      "Frosted cakes": {
+        items: [
+          { name: "Chocolate truffle", prices: { "0.5 kg": 650, "1 kg": 1200, "1.5 kg": 1800, "2 kg": 2400 } },
+          { name: "Black Forest", prices: { "0.5 kg": 650, "1 kg": 1200, "1.5 kg": 1800, "2 kg": 2400 } },
+          { name: "Lemon and Blueberry", prices: { "0.5 kg": 1000, "1 kg": 2000, "1.5 kg": 3000, "2 kg": 4000 } },
+          { name: "Mixed berries", prices: { "0.5 kg": 1000, "1 kg": 2000, "1.5 kg": 3000, "2 kg": 4000 } },
+          { name: "Banoffe cake", prices: { "0.5 kg": 800, "1 kg": 1500, "1.5 kg": 2250, "2 kg": 3000 } }
+        ],
+        sizes: [
+          { label: "0.5 kg" },
+          { label: "1 kg" },
+          { label: "1.5 kg" },
+          { label: "2 kg" }
+        ]
+      },
+      "Beyond cakes": {
+        items: [
+          { name: "Chocolate éclair", unitPrice: 180 },
+          { name: "Dark Chocolate tart", unitPrice: 600 },
+          { name: "Banoffee pie", unitPrice: 600 }
+        ],
+        sizes: [
+          { label: "Qty: 1", multiplier: 1 },
+          { label: "Qty: 2", multiplier: 2 },
+          { label: "Qty: 4", multiplier: 4 },
+          { label: "Platter (Qty: 6)", multiplier: 6 }
+        ]
+      }
+    };
+
+    let currentCategory = "Cookies";
+    let basket = [];
+
+    // Set default tomorrow date
+    const dateInput = document.getElementById('date');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.value = tomorrow.toISOString().split('T')[0];
+    dateInput.min = new Date().toISOString().split('T')[0];
+
+    // Pick Category Card
+    function pickCategory(categoryName) {
+      currentCategory = categoryName;
+
+      // Update card UI
+      document.querySelectorAll('.product-card').forEach(card => {
+        const title = card.querySelector('.product-name').innerText.trim().toLowerCase();
+        if (title === categoryName.trim().toLowerCase()) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+      });
+
+      document.getElementById('activeCategoryName').innerText = categoryName;
+
+      // Populate Flavour / Items
+      const subSelect = document.getElementById('subcategorySelect');
+      subSelect.innerHTML = "";
+      MENU_CATALOG[categoryName].items.forEach((item, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = item.name;
+        subSelect.appendChild(opt);
+      });
+
+      // Populate Sizes
+      const sizeSelect = document.getElementById('sizeSelect');
+      sizeSelect.innerHTML = "";
+      MENU_CATALOG[categoryName].sizes.forEach((sz, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = sz.label;
+        sizeSelect.appendChild(opt);
+      });
+
+      updateEstimatedPrice();
+    }
+
+    function onItemChanged() {
+      updateEstimatedPrice();
+    }
+
+    function calculateCurrentPrice() {
+      const cat = MENU_CATALOG[currentCategory];
+      const itemIndex = parseInt(document.getElementById('subcategorySelect').value) || 0;
+      const sizeIndex = parseInt(document.getElementById('sizeSelect').value) || 0;
+      const itemObj = cat.items[itemIndex];
+      const sizeObj = cat.sizes[sizeIndex];
+
+      if (!itemObj || !sizeObj) return 0;
+
+      if (currentCategory === "Frosted cakes") {
+        return itemObj.prices[sizeObj.label] || 0;
+      } else {
+        return itemObj.unitPrice * (sizeObj.multiplier || 1);
+      }
+    }
+
+    function updateEstimatedPrice() {
+      const price = calculateCurrentPrice();
+      document.getElementById('btnPriceDisplay').innerText = `₹${price}`;
+    }
+
+    // Add to Basket
+    function addToBasket() {
+      const cat = MENU_CATALOG[currentCategory];
+      const itemIndex = parseInt(document.getElementById('subcategorySelect').value) || 0;
+      const sizeIndex = parseInt(document.getElementById('sizeSelect').value) || 0;
+      const itemObj = cat.items[itemIndex];
+      const sizeObj = cat.sizes[sizeIndex];
+      const price = calculateCurrentPrice();
+
+      basket.push({
+        id: Date.now(),
+        category: currentCategory,
+        name: itemObj.name,
+        size: sizeObj.label,
+        price: price
+      });
+
+      renderBasket();
+    }
+
+    function removeFromBasket(id) {
+      basket = basket.filter(item => item.id !== id);
+      renderBasket();
+    }
+
+    function renderBasket() {
+      const listEl = document.getElementById('cartList');
+      const totalEl = document.getElementById('cartTotal');
+      const btnTotalEl = document.getElementById('btnTotalDisplay');
+
+      if (basket.length === 0) {
+        listEl.innerHTML = `<li class="empty-cart-msg">Your basket is empty. Select an item above and click "Add to Order Basket".</li>`;
+        totalEl.innerText = "₹0";
+        btnTotalEl.innerText = "₹0";
+        return;
+      }
+
+      listEl.innerHTML = "";
+      let grandTotal = 0;
+
+      basket.forEach(item => {
+        grandTotal += item.price;
+        const li = document.createElement('li');
+        li.className = "cart-item";
+        li.innerHTML = `
+          <div class="cart-item-details">
+            <div>${item.name}</div>
+            <div class="cart-item-sub">${item.category} • ${item.size}</div>
+          </div>
+          <div class="cart-item-price">₹${item.price}</div>
+          <button class="remove-btn" title="Remove item" onclick="removeFromBasket(${item.id})">✕</button>
+        `;
+        listEl.appendChild(li);
+      });
+
+      totalEl.innerText = `₹${grandTotal}`;
+      btnTotalEl.innerText = `₹${grandTotal}`;
+    }
+
+    // WhatsApp Checkout
+    function orderOnWhatsApp() {
+      if (basket.length === 0) {
+        alert("Your basket is empty! Please add at least one item before ordering.");
+        return;
+      }
+
+      const date = document.getElementById('date').value;
+      const occasion = document.getElementById('occasion').value.trim() || "Not specified";
+      const message = document.getElementById('message').value.trim() || "None";
+
+      if (!date) {
+        alert("Please select your required delivery/pickup date.");
+        return;
+      }
+
+      const cleanPhone = BAKEHOUSE_PHONE.replace(/[^0-9]/g, '');
+
+      // Format Basket Items
+      let itemsListText = "";
+      let grandTotal = 0;
+
+      basket.forEach((item, index) => {
+        itemsListText += `${index + 1}. *${item.name}* (${item.category})\n   • Size/Qty: ${item.size} — ₹${item.price}\n`;
+        grandTotal += item.price;
+      });
+
+      const text = 
+`Hi Bani's Bakehouse! 🧁 I would like to place an order:
+
+🛒 *Order Items:*
+${itemsListText}
+💰 *Total Amount:* ₹${grandTotal}
+📅 *Required Date:* ${date}
+🎉 *Occasion:* ${occasion}
+✍️ *Message / Notes:* ${message}
+
+Could you please confirm availability and payment details? Thank you!`;
+
+      const encodedText = encodeURIComponent(text);
+      const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
+      window.location.href = waUrl;
+    }
+
+    // Initialise on load
+    window.onload = function() {
+      pickCategory("Cookies");
+    };
+  </script>
+</body>
+</html>
