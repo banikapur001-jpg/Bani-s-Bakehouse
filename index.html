@@ -14,7 +14,7 @@
     /* Brand Colour Palette */
     :root {
       --bg-cream: #fffaf8;         /* Page background */
-      --peach-warm: #ffe5d9;       /* Swatch 2: Header gradient & highlights */
+      --peach-warm: #ffe5d9;       /* Swatch 2: Header gradient & chip active */
       --pink-soft: #ffcad4;        /* Swatch 3: Soft borders & card accents */
       --pink-accent: #f4acb7;      /* Swatch 4: Active borders & button hover */
       --mauve-deep: #9d8189;       /* Swatch 5: Headings & branding */
@@ -36,144 +36,151 @@
       background-color: var(--bg-cream);
       color: var(--text-dark);
       line-height: 1.4;
-      padding-bottom: 30px;        /* Reduced from 60px */
+      padding-bottom: 50px;
     }
 
     select, input, textarea, button {
       font-family: 'Quicksand', sans-serif;
     }
 
-    h1, .section-title, .order-box h2, .cart-box h2 {
+    h1, .box-title {
       font-family: 'Playfair Display', serif;
     }
 
     /* Header */
     header {
       text-align: center;
-      padding: 25px 20px 15px;     /* Reduced from 45px 20px 30px */
+      padding: 35px 20px 20px;
       background: linear-gradient(180deg, var(--peach-warm) 0%, var(--bg-cream) 100%);
     }
 
     .bakery-logo {
-      width: 150px;
-      height: 150px;
+      width: 130px;
+      height: 130px;
       object-fit: contain;
       border-radius: 50%;
       border: 3px solid var(--pink-soft);
       box-shadow: var(--shadow);
       background-color: #ffffff;
-      margin-bottom: 16px;
-      padding: 8px;
+      margin-bottom: 14px;
+      padding: 6px;
     }
 
     .badge {
       display: inline-block;
       background-color: var(--sage-subtle);
       color: var(--text-dark);
-      padding: 6px 18px;
+      padding: 5px 16px;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       border: 1px solid #c7d4cd;
     }
 
     h1 {
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       color: var(--mauve-deep);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .tagline {
       color: var(--text-muted);
-      font-size: 1.25rem;
-      line-height: 1.6;
+      font-size: 1.15rem;
+      line-height: 1.5;
       max-width: 620px;
       margin: 0 auto;
       font-weight: 500;
     }
 
-    /* Main Container */
+    /* Two-Column Balanced Layout */
     .container {
       max-width: 1100px;
-      margin: 0 auto;
+      margin: 30px auto 0;
       padding: 0 20px;
     }
 
-    .section-title {
-      font-size: 1.7rem;
-      text-align: center;
-      color: var(--text-dark);
-      margin: 24px 0 14px;         /* Reduced from 40px 0 22px */
-    }
-
-/* Category Cards Grid (Centered Circles) */
-    .menu-grid {
+    .content-row {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;                   /* Reduced gap from 20px */
-      margin-bottom: 18px;         /* Reduced from 30px */
+      gap: 28px;
+      align-items: stretch; /* Keeps heights aligned */
     }
 
-    .product-card {
-      width: 165px;
-      height: 165px;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;               /* Makes the card a circle */
+    .selector-box, .order-box {
+      flex: 1;
       background: #ffffff;
-      border: 2px solid var(--pink-soft);
-      padding: 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
+      border-radius: var(--radius);
+      padding: 28px 24px;
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
     }
 
-    .product-icon {
-      font-size: 2.2rem;
-      margin-bottom: 4px;
+    .selector-box {
+      border: 2px solid var(--pink-soft);
+    }
+
+    .order-box {
+      border: 2px dashed var(--pink-soft);
+    }
+
+    .box-title {
+      font-size: 1.55rem;
+      color: var(--mauve-deep);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* Category Chips Grid */
+    .category-chips-container {
+      margin-bottom: 18px;
+    }
+
+    .chips-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--mauve-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
       display: block;
     }
 
-    .product-name {
-      font-size: 1.05rem;
+    .chips-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .category-chip {
+      background: #ffffff;
+      border: 1.5px solid var(--pink-soft);
+      border-radius: 50px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-dark);
-      margin-bottom: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
     }
 
-    .product-price {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--mauve-deep);
+    .category-chip:hover {
+      border-color: var(--pink-accent);
+      background-color: #fff9fa;
     }
 
-    /* Selector Box */
-   .selector-box {
-      background: #ffffff;
-      border: 2px solid var(--pink-soft);
-      border-radius: 16px;
-      padding: 18px 20px;          /* Reduced inner padding from 24px */
-      margin: 0 auto 20px;         /* Reduced bottom margin from 35px */
-      max-width: 750px;            /* Increased from 650px to reduce side margins */
-      box-shadow: var(--shadow);
+    .category-chip.selected {
+      background-color: var(--peach-warm);
+      border-color: var(--pink-accent);
+      color: var(--text-dark);
+      box-shadow: 0 4px 10px rgba(157, 129, 137, 0.15);
     }
 
-    .selector-title {
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--mauve-deep);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
+    /* Form Fields */
     .form-group {
       margin-bottom: 16px;
     }
@@ -181,17 +188,17 @@
     label {
       display: block;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       margin-bottom: 6px;
       color: var(--text-dark);
     }
 
     select, input[type="text"], input[type="date"], textarea {
       width: 100%;
-      padding: 12px 14px;
+      padding: 11px 14px;
       border: 1.5px solid var(--pink-soft);
       border-radius: 12px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-dark);
       background-color: #fffdfd;
       outline: none;
@@ -213,13 +220,13 @@
       background-color: var(--mauve-deep);
       color: white;
       border: none;
-      padding: 14px 20px;
+      padding: 13px 18px;
       border-radius: 50px;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 6px 16px rgba(157, 129, 137, 0.25);
+      margin-top: auto; /* Pushes button nicely to bottom if box expands */
+      box-shadow: 0 6px 16px rgba(157, 129, 137, 0.22);
       transition: background-color 0.2s, transform 0.2s;
     }
 
@@ -228,48 +235,34 @@
       transform: translateY(-2px);
     }
 
-    /* Basket / Cart Box */
- .order-box {
-      background: #ffffff;
-      border: 2px dashed var(--pink-soft);
-      border-radius: var(--radius);
-      padding: 22px 24px;          /* Reduced inner padding from 35px */
-      max-width: 750px;            /* Increased from 650px to reduce side margins */
-      margin: 0 auto;
-      box-shadow: var(--shadow);
-    }
-
-    .order-box h2 {
-      color: var(--mauve-deep);
-      font-size: 1.7rem;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
+    /* Cart / Basket Items List */
     .cart-items-list {
       list-style: none;
-      margin-bottom: 20px;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-bottom: 14px;
+      padding-right: 4px;
     }
 
     .cart-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 14px;
+      padding: 10px 12px;
       background-color: var(--peach-warm);
       border-radius: 12px;
-      margin-bottom: 10px;
-      font-size: 0.95rem;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
       font-weight: 600;
     }
 
     .cart-item-details {
       flex: 1;
-      padding-right: 12px;
+      padding-right: 8px;
     }
 
     .cart-item-sub {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       font-weight: 500;
     }
@@ -277,52 +270,48 @@
     .cart-item-price {
       font-weight: 700;
       color: var(--mauve-deep);
-      margin-right: 12px;
+      margin-right: 8px;
     }
 
     .remove-btn {
       background: transparent;
       border: none;
       color: #c2185b;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
       font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
-    }
-
-    .remove-btn:hover {
-      background-color: #ffd4de;
+      padding: 2px 6px;
     }
 
     .empty-cart-msg {
       text-align: center;
       color: var(--text-muted);
-      padding: 20px 0;
+      padding: 16px 0;
       font-style: italic;
+      font-size: 0.9rem;
     }
 
     .cart-total-box {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 16px;
-      border-top: 2px solid var(--pink-soft);
-      margin-top: 10px;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
+      padding: 10px 12px;
+      border-top: 1.5px solid var(--pink-soft);
+      border-bottom: 1.5px solid var(--pink-soft);
+      margin-bottom: 16px;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text-dark);
     }
 
     .cart-total-amount {
       color: var(--mauve-deep);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .row {
       display: flex;
-      gap: 16px;
+      gap: 12px;
     }
 
     .row .form-group {
@@ -339,12 +328,12 @@
       background-color: #25d366;
       color: white;
       border: none;
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-radius: 50px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: auto;
       box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
       transition: transform 0.2s, background-color 0.2s;
     }
@@ -355,57 +344,33 @@
     }
 
     .whatsapp-icon {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       fill: currentColor;
     }
 
     .order-note {
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 14px;
+      margin-top: 10px;
     }
 
-    @media (max-width: 600px) {
-      .row {
-        flex-direction: column;
-        gap: 0;
-      }
-      .order-box, .selector-box {
-        padding: 22px 16px;
-      }
-      h1 {
-        font-size: 2.2rem;
-      }
-      .tagline {
-        font-size: 1.05rem;
-      }
-    }
-    .content-row {
-      display: flex;
-      gap: 24px;
-      max-width: 1050px;
-      margin: 0 auto;
-      align-items: flex-start;
-    }
-
-    .selector-box, .order-box {
-      flex: 1;
-      max-width: none;
-      margin: 0;
-    }
-
+    /* Responsive for Tablets & Mobile */
     @media (max-width: 850px) {
       .content-row {
         flex-direction: column;
       }
       .selector-box, .order-box {
         width: 100%;
-        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: 2.1rem;
+      }
+      .tagline {
+        font-size: 1rem;
       }
     }
-  </style>
   </style>
 </head>
 <body>
@@ -413,57 +378,49 @@
   <header>
     <img src="logo.png" alt="Bani's Bakehouse Logo" class="bakery-logo" />
     <br />
-  
+    <span class="badge">Artisanal & Homecrafted</span>
+    <h1>Bani's Bakehouse</h1>
     <p class="tagline">Warm treats, delicate flavours, and handcrafted celebration cakes made fresh for your sweetest memories.</p>
   </header>
 
   <div class="container">
-    <h2 class="section-title">1. Choose Your Treats</h2>
-    
-    <!-- 5 Category Cards -->
-    <div class="menu-grid" id="menuGrid">
-      <div class="product-card selected" onclick="pickCategory('Cookies')">
-        <span class="product-icon">🍪</span>
-        <div class="product-name">Cookies</div>
-      </div>
-
-      <div class="product-card" onclick="pickCategory('Tea cakes')">
-        <span class="product-icon">🥮</span>
-        <div class="product-name">Tea cakes</div>
-      </div>
-
-      <div class="product-card" onclick="pickCategory('Cake jars')">
-        <span class="product-icon">🫙</span>
-        <div class="product-name">Cake jars</div>
-      </div>
-
-      <div class="product-card" onclick="pickCategory('Frosted cakes')">
-        <span class="product-icon">🎂</span>
-        <div class="product-name">Frosted cakes</div>
-      </div>
-
-      <div class="product-card" onclick="pickCategory('Beyond cakes')">
-        <span class="product-icon">✨</span>
-        <div class="product-name">Beyond cakes</div>
-      </div>
-    </div>
-
-  <!-- Wrapper to put both boxes side-by-side -->
     <div class="content-row">
 
-      <!-- Box 1: Options -->
+      <!-- LEFT COLUMN: Choose Treats -->
       <div class="selector-box">
-        <div class="selector-title">
-          Select Options for <span id="activeCategoryName" style="text-decoration: underline;">Cookies</span>
+        <h2 class="box-title">1. Choose Your Treats</h2>
+
+        <!-- Interactive Category Chips -->
+        <div class="category-chips-container">
+          <span class="chips-label">Select Category:</span>
+          <div class="chips-grid">
+            <button type="button" class="category-chip selected" onclick="pickCategory('Cookies', this)">
+              <span>🍪</span> Cookies
+            </button>
+            <button type="button" class="category-chip" onclick="pickCategory('Tea cakes', this)">
+              <span>🥮</span> Tea cakes
+            </button>
+            <button type="button" class="category-chip" onclick="pickCategory('Cake jars', this)">
+              <span>🫙</span> Cake jars
+            </button>
+            <button type="button" class="category-chip" onclick="pickCategory('Frosted cakes', this)">
+              <span>🎂</span> Frosted cakes
+            </button>
+            <button type="button" class="category-chip" onclick="pickCategory('Beyond cakes', this)">
+              <span>✨</span> Beyond cakes
+            </button>
+          </div>
         </div>
 
+        <!-- Flavour / Item Dropdown -->
         <div class="form-group">
-          <label for="subcategorySelect">Flavour / Item</label>
+          <label for="subcategorySelect">Flavour / Variety</label>
           <select id="subcategorySelect" onchange="onItemChanged()">
             <!-- Populated by JS -->
           </select>
         </div>
 
+        <!-- Size / Quantity Dropdown -->
         <div class="form-group">
           <label for="sizeSelect">Size / Quantity</label>
           <select id="sizeSelect" onchange="updateEstimatedPrice()">
@@ -471,27 +428,28 @@
           </select>
         </div>
 
+        <!-- Add to Order Basket Button -->
         <button type="button" class="add-btn" onclick="addToBasket()">
-          ➕ Add to Order Basket (<span id="btnPriceDisplay">₹60</span>)
+          ➕ Add to Basket (<span id="btnPriceDisplay">₹60</span>)
         </button>
       </div>
 
-      <!-- Box 2: Basket -->
+      <!-- RIGHT COLUMN: Order Basket & Checkout -->
       <div class="order-box">
-        <h2>2. Your Order Basket 🧺</h2>
+        <h2 class="box-title">2. Your Order Basket 🧺</h2>
 
-        <!-- Items List -->
+        <!-- Cart List -->
         <ul class="cart-items-list" id="cartList">
-          <li class="empty-cart-msg">Your basket is empty. Select an item above and click "Add to Order Basket".</li>
+          <li class="empty-cart-msg">Your basket is empty. Select an item on the left and click "Add to Basket".</li>
         </ul>
 
-        <!-- Total -->
+        <!-- Live Total Amount -->
         <div class="cart-total-box">
-          <span>Total Amount:</span>
+          <span>Total:</span>
           <span class="cart-total-amount" id="cartTotal">₹0</span>
         </div>
 
-        <!-- Date & Occasion -->
+        <!-- Date & Occasion Row -->
         <div class="row">
           <div class="form-group">
             <label for="date">Required Date *</label>
@@ -500,17 +458,17 @@
 
           <div class="form-group">
             <label for="occasion">Occasion</label>
-            <input type="text" id="occasion" placeholder="e.g. Birthday, Anniversary, Tea Party" />
+            <input type="text" id="occasion" placeholder="e.g. Birthday, Tea Party" />
           </div>
         </div>
 
-        <!-- Message / Notes -->
+        <!-- Notes / Message -->
         <div class="form-group">
-          <label for="message">Message on Cake / Custom Notes</label>
+          <label for="message">Message on Cake / Notes</label>
           <textarea id="message" rows="2" placeholder="e.g. 'Happy Birthday Kabir!' or eggless preference"></textarea>
         </div>
 
-        <!-- WhatsApp Order Button -->
+        <!-- WhatsApp Checkout -->
         <button class="whatsapp-btn" onclick="orderOnWhatsApp()">
           <svg class="whatsapp-icon" viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
@@ -518,58 +476,17 @@
           Order on WhatsApp (<span id="btnTotalDisplay">₹0</span>)
         </button>
 
-        <p class="order-note">Clicking will open WhatsApp with your itemised basket & total amount pre-filled.</p>
+        <p class="order-note">Opens WhatsApp with your full basket and calculated total pre-filled.</p>
       </div>
 
-    </div>
-
-      <!-- Items List -->
-      <ul class="cart-items-list" id="cartList">
-        <li class="empty-cart-msg">Your basket is empty. Select an item above and click "Add to Order Basket".</li>
-      </ul>
-
-      <!-- Total -->
-      <div class="cart-total-box">
-        <span>Total Amount:</span>
-        <span class="cart-total-amount" id="cartTotal">₹0</span>
-      </div>
-
-      <!-- Date & Occasion -->
-      <div class="row">
-        <div class="form-group">
-          <label for="date">Required Date *</label>
-          <input type="date" id="date" required />
-        </div>
-
-        <div class="form-group">
-          <label for="occasion">Occasion</label>
-          <input type="text" id="occasion" placeholder="e.g. Birthday, Anniversary, Tea Party" />
-        </div>
-      </div>
-
-      <!-- Message / Notes -->
-      <div class="form-group">
-        <label for="message">Message on Cake / Custom Notes</label>
-        <textarea id="message" rows="2" placeholder="e.g. 'Happy Birthday Kabir!' or eggless preference"></textarea>
-      </div>
-
-      <!-- WhatsApp Order Button -->
-      <button class="whatsapp-btn" onclick="orderOnWhatsApp()">
-        <svg class="whatsapp-icon" viewBox="0 0 24 24">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
-        </svg>
-        Order on WhatsApp (<span id="btnTotalDisplay">₹0</span>)
-      </button>
-
-      <p class="order-note">Clicking will open WhatsApp with your itemised basket & total amount pre-filled.</p>
     </div>
   </div>
 
   <script>
-    // Your verified WhatsApp phone number
+    // Verified WhatsApp Phone Number
     const BAKEHOUSE_PHONE = "919654148896";
 
-    // Menu Structure with Price Calculation Data
+    // Complete Menu Catalog
     const MENU_CATALOG = {
       "Cookies": {
         items: [
@@ -645,30 +562,24 @@
     let currentCategory = "Cookies";
     let basket = [];
 
-    // Set default tomorrow date
+    // Set tomorrow's date by default
     const dateInput = document.getElementById('date');
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     dateInput.value = tomorrow.toISOString().split('T')[0];
     dateInput.min = new Date().toISOString().split('T')[0];
 
-    // Pick Category Card
-    function pickCategory(categoryName) {
+    // Category Chip Selection
+    function pickCategory(categoryName, chipElement) {
       currentCategory = categoryName;
 
-      // Update card UI
-      document.querySelectorAll('.product-card').forEach(card => {
-        const title = card.querySelector('.product-name').innerText.trim().toLowerCase();
-        if (title === categoryName.trim().toLowerCase()) {
-          card.classList.add('selected');
-        } else {
-          card.classList.remove('selected');
-        }
-      });
+      // Update chip active states
+      document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
+      if (chipElement) {
+        chipElement.classList.add('selected');
+      }
 
-      document.getElementById('activeCategoryName').innerText = categoryName;
-
-      // Populate Flavour / Items
+      // Populate Items Dropdown
       const subSelect = document.getElementById('subcategorySelect');
       subSelect.innerHTML = "";
       MENU_CATALOG[categoryName].items.forEach((item, index) => {
@@ -678,7 +589,7 @@
         subSelect.appendChild(opt);
       });
 
-      // Populate Sizes
+      // Populate Sizes Dropdown
       const sizeSelect = document.getElementById('sizeSelect');
       sizeSelect.innerHTML = "";
       MENU_CATALOG[categoryName].sizes.forEach((sz, index) => {
@@ -716,7 +627,7 @@
       document.getElementById('btnPriceDisplay').innerText = `₹${price}`;
     }
 
-    // Add to Basket
+    // Basket Operations
     function addToBasket() {
       const cat = MENU_CATALOG[currentCategory];
       const itemIndex = parseInt(document.getElementById('subcategorySelect').value) || 0;
@@ -747,7 +658,7 @@
       const btnTotalEl = document.getElementById('btnTotalDisplay');
 
       if (basket.length === 0) {
-        listEl.innerHTML = `<li class="empty-cart-msg">Your basket is empty. Select an item above and click "Add to Order Basket".</li>`;
+        listEl.innerHTML = `<li class="empty-cart-msg">Your basket is empty. Select an item on the left and click "Add to Basket".</li>`;
         totalEl.innerText = "₹0";
         btnTotalEl.innerText = "₹0";
         return;
@@ -793,7 +704,6 @@
 
       const cleanPhone = BAKEHOUSE_PHONE.replace(/[^0-9]/g, '');
 
-      // Format Basket Items
       let itemsListText = "";
       let grandTotal = 0;
 
@@ -821,7 +731,8 @@ Could you please confirm availability and payment details? Thank you!`;
 
     // Initialise on load
     window.onload = function() {
-      pickCategory("Cookies");
+      const firstChip = document.querySelector('.category-chip');
+      pickCategory("Cookies", firstChip);
     };
   </script>
 </body>
