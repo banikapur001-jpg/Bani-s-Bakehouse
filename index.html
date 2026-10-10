@@ -94,7 +94,7 @@
       font-weight: 500;
     }
 
-    /* Layout Container */
+    /* Two-Column Balanced Layout */
     .container {
       max-width: 1100px;
       margin: 30px auto 0;
@@ -132,7 +132,7 @@
       margin-bottom: 22px;
     }
 
-    /* Category Buttons (No Icons, Larger & Spacious) */
+    /* Category Buttons (No Icons, Clean & Bold) */
     .category-chips-container {
       margin-bottom: 22px;
     }
@@ -157,8 +157,8 @@
       background: #ffffff;
       border: 2px solid var(--pink-soft);
       border-radius: 50px;
-      padding: 11px 20px;         /* Generous button padding */
-      font-size: 1rem;            /* Increased font size */
+      padding: 11px 20px;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-dark);
       cursor: pointer;
@@ -209,7 +209,7 @@
       background-color: #ffffff;
     }
 
-    /* Live Selection & Price Preview Card (Fills the white space) */
+    /* Selection Preview & Price Card */
     .item-preview-card {
       background: linear-gradient(135deg, var(--peach-warm) 0%, #fff7f9 100%);
       border: 1.5px solid var(--pink-accent);
@@ -421,7 +421,7 @@
       <div class="selector-box">
         <h2 class="box-title">1. Choose Your Treats</h2>
 
-        <!-- Category Buttons (Clean Text, No Icons, Spacious) -->
+        <!-- Category Buttons -->
         <div class="category-chips-container">
           <span class="chips-label">Select Category</span>
           <div class="chips-grid">
@@ -447,7 +447,7 @@
         <div class="form-group">
           <label for="subcategorySelect">Flavour / Variety</label>
           <select id="subcategorySelect" onchange="onItemChanged()">
-            <!-- Populated by JS -->
+            <!-- Populated dynamically -->
           </select>
         </div>
 
@@ -455,11 +455,11 @@
         <div class="form-group">
           <label for="sizeSelect">Size / Quantity</label>
           <select id="sizeSelect" onchange="updateEstimatedPrice()">
-            <!-- Populated by JS -->
+            <!-- Populated dynamically -->
           </select>
         </div>
 
-        <!-- Live Selection Preview Card (Fills the white space) -->
+        <!-- Live Selection Preview Card -->
         <div class="item-preview-card">
           <div>
             <div class="preview-heading" id="previewTitle">Cookies — Dark chocolate chip</div>
@@ -508,7 +508,7 @@
           <textarea id="message" rows="2" placeholder="e.g. 'Happy Birthday Kabir!' or eggless preference"></textarea>
         </div>
 
-        <!-- WhatsApp Checkout -->
+        <!-- WhatsApp Checkout Button -->
         <button class="whatsapp-btn" onclick="orderOnWhatsApp()">
           <svg class="whatsapp-icon" viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
@@ -523,7 +523,7 @@
   </div>
 
   <script>
-    // Your verified WhatsApp phone number
+    // Verified WhatsApp Phone Number
     const BAKEHOUSE_PHONE = "919654148896";
 
     // Complete Menu Catalog
@@ -602,13 +602,226 @@
     let currentCategory = "Cookies";
     let basket = [];
 
-    // Set tomorrow's date by default
-    const dateInput = document.getElementById('date');
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    dateInput.value = tomorrow.toISOString().split('T')[0];
-    dateInput.min = new Date().toISOString().split('T')[0];
+    // Helper function to safely update text without crashing
+    function setSafeText(elementId, text) {
+      const el = document.getElementById(elementId);
+      if (el) el.innerText = text;
+    }
 
-    // Category Button Selection
-    function pickCategory(categoryName, chipElement) {
+    // Set tomorrow's date safely
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.value = tomorrow.toISOString().split('T')[0];
+      dateInput.min = new Date().toISOString().split('T')[0];
+    }
+
+    // Category Button Selection (Explicitly bound to window for global access)
+    window.pickCategory = function(categoryName, chipElement) {
       currentCategory = categoryName;
+
+      // Update button styling
+      document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
+      if (chipElement) {
+        chipElement.classList.add('selected');
+      } else {
+        document.querySelectorAll('.category-chip').forEach(c => {
+          if (c.innerText.trim().toLowerCase() === categoryName.trim().toLowerCase()) {
+            c.classList.add('selected');
+          }
+        });
+      }
+
+      // Populate Items
+      const subSelect = document.getElementById('subcategorySelect');
+      if (subSelect && MENU_CATALOG[categoryName]) {
+        subSelect.innerHTML = "";
+        MENU_CATALOG[categoryName].items.forEach((item, index) => {
+          const opt = document.createElement('option');
+          opt.value = index;
+          opt.innerText = item.name;
+          subSelect.appendChild(opt);
+        });
+      }
+
+      // Populate Sizes
+      const sizeSelect = document.getElementById('sizeSelect');
+      if (sizeSelect && MENU_CATALOG[categoryName]) {
+        sizeSelect.innerHTML = "";
+        MENU_CATALOG[categoryName].sizes.forEach((sz, index) => {
+          const opt = document.createElement('option');
+          opt.value = index;
+          opt.innerText = sz.label;
+          sizeSelect.appendChild(opt);
+        });
+      }
+
+      window.updateEstimatedPrice();
+    };
+
+    window.onItemChanged = function() {
+      window.updateEstimatedPrice();
+    };
+
+    window.calculateCurrentPrice = function() {
+      const cat = MENU_CATALOG[currentCategory];
+      if (!cat) return 0;
+
+      const subSelect = document.getElementById('subcategorySelect');
+      const sizeSelect = document.getElementById('sizeSelect');
+      if (!subSelect || !sizeSelect) return 0;
+
+      const itemIndex = parseInt(subSelect.value) || 0;
+      const sizeIndex = parseInt(sizeSelect.value) || 0;
+      const itemObj = cat.items[itemIndex];
+      const sizeObj = cat.sizes[sizeIndex];
+
+      if (!itemObj || !sizeObj) return 0;
+
+      if (currentCategory === "Frosted cakes") {
+        return (itemObj.prices && itemObj.prices[sizeObj.label]) ? itemObj.prices[sizeObj.label] : 0;
+      } else {
+        return itemObj.unitPrice * (sizeObj.multiplier || 1);
+      }
+    };
+
+    window.updateEstimatedPrice = function() {
+      const cat = MENU_CATALOG[currentCategory];
+      if (!cat) return;
+
+      const subSelect = document.getElementById('subcategorySelect');
+      const sizeSelect = document.getElementById('sizeSelect');
+      if (!subSelect || !sizeSelect) return;
+
+      const itemIndex = parseInt(subSelect.value) || 0;
+      const sizeIndex = parseInt(sizeSelect.value) || 0;
+      const itemObj = cat.items[itemIndex];
+      const sizeObj = cat.sizes[sizeIndex];
+
+      if (!itemObj || !sizeObj) return;
+
+      const price = window.calculateCurrentPrice();
+
+      setSafeText('btnPriceDisplay', `₹${price}`);
+      setSafeText('previewTitle', `${currentCategory} — ${itemObj.name}`);
+      setSafeText('previewSubtitle', `Size: ${sizeObj.label} • Freshly prepared`);
+      setSafeText('previewPriceTag', `₹${price}`);
+    };
+
+    // Basket Operations
+    window.addToBasket = function() {
+      const cat = MENU_CATALOG[currentCategory];
+      if (!cat) return;
+
+      const subSelect = document.getElementById('subcategorySelect');
+      const sizeSelect = document.getElementById('sizeSelect');
+      if (!subSelect || !sizeSelect) return;
+
+      const itemIndex = parseInt(subSelect.value) || 0;
+      const sizeIndex = parseInt(sizeSelect.value) || 0;
+      const itemObj = cat.items[itemIndex];
+      const sizeObj = cat.sizes[sizeIndex];
+      const price = window.calculateCurrentPrice();
+
+      basket.push({
+        id: Date.now(),
+        category: currentCategory,
+        name: itemObj.name,
+        size: sizeObj.label,
+        price: price
+      });
+
+      window.renderBasket();
+    };
+
+    window.removeFromBasket = function(id) {
+      basket = basket.filter(item => item.id !== id);
+      window.renderBasket();
+    };
+
+    window.renderBasket = function() {
+      const listEl = document.getElementById('cartList');
+      if (!listEl) return;
+
+      if (basket.length === 0) {
+        listEl.innerHTML = `<li class="empty-cart-msg">Your basket is empty. Select an item on the left and click "Add to Basket".</li>`;
+        setSafeText('cartTotal', '₹0');
+        setSafeText('btnTotalDisplay', '₹0');
+        return;
+      }
+
+      listEl.innerHTML = "";
+      let grandTotal = 0;
+
+      basket.forEach(item => {
+        grandTotal += item.price;
+        const li = document.createElement('li');
+        li.className = "cart-item";
+        li.innerHTML = `
+          <div class="cart-item-details">
+            <div>${item.name}</div>
+            <div class="cart-item-sub">${item.category} • ${item.size}</div>
+          </div>
+          <div class="cart-item-price">₹${item.price}</div>
+          <button class="remove-btn" title="Remove item" onclick="window.removeFromBasket(${item.id})">✕</button>
+        `;
+        listEl.appendChild(li);
+      });
+
+      setSafeText('cartTotal', `₹${grandTotal}`);
+      setSafeText('btnTotalDisplay', `₹${grandTotal}`);
+    };
+
+    // WhatsApp Checkout
+    window.orderOnWhatsApp = function() {
+      if (basket.length === 0) {
+        alert("Your basket is empty! Please add at least one item before ordering.");
+        return;
+      }
+
+      const dateEl = document.getElementById('date');
+      const date = dateEl ? dateEl.value : "";
+      const occasionEl = document.getElementById('occasion');
+      const occasion = (occasionEl && occasionEl.value.trim()) ? occasionEl.value.trim() : "Not specified";
+      const messageEl = document.getElementById('message');
+      const message = (messageEl && messageEl.value.trim()) ? messageEl.value.trim() : "None";
+
+      if (!date) {
+        alert("Please select your required delivery/pickup date.");
+        return;
+      }
+
+      const cleanPhone = BAKEHOUSE_PHONE.replace(/[^0-9]/g, '');
+
+      let itemsListText = "";
+      let grandTotal = 0;
+
+      basket.forEach((item, index) => {
+        itemsListText += `${index + 1}. *${item.name}* (${item.category})\n   • Size/Qty: ${item.size} — ₹${item.price}\n`;
+        grandTotal += item.price;
+      });
+
+      const text = 
+`Hi Bani's Bakehouse! 🧁 I would like to place an order:
+
+🛒 *Order Items:*
+${itemsListText}
+💰 *Total Amount:* ₹${grandTotal}
+📅 *Required Date:* ${date}
+🎉 *Occasion:* ${occasion}
+✍️ *Message / Notes:* ${message}
+
+Could you please confirm availability and payment details? Thank you!`;
+
+      const encodedText = encodeURIComponent(text);
+      const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
+      window.location.href = waUrl;
+    };
+
+    // Initialize immediately
+    const firstChip = document.querySelector('.category-chip');
+    window.pickCategory("Cookies", firstChip);
+  </script>
+</body>
+</html>
